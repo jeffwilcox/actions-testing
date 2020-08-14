@@ -3,15 +3,19 @@ on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: docker.pkg.github.com/microsoft/opensource.microsoft.com/custom-jekyll-builder:latest
+    steps:
+      - uses: azure/docker-login@v1
+        with:
+          login-server: 'docker.pkg.github.com'
+          username: 'jeffwilcox'
+          password: ${{ secrets.GP_PASSWORD }}
+      #image: docker.pkg.github.com/microsoft/opensource.microsoft.com/custom-jekyll-builder:latest
       #options: --user 1001
       #volumes:
       #  - /github/workflow:/usr/local/site
-    steps:
     #- uses: actions/checkout@v2
-    - name: debug
-      run: pwd && whoami
+      - name: debug
+        run: pwd && whoami
       # working-directory: /
     #- name: build
     #  run: |
