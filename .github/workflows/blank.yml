@@ -9,17 +9,17 @@ jobs:
           login-server: 'docker.pkg.github.com'
           username: 'jeffwilcox'
           password: ${{ secrets.GP_PASSWORD }}
-      #image: docker.pkg.github.com/microsoft/opensource.microsoft.com/custom-jekyll-builder:latest
-      #options: --user 1001
-      #volumes:
-      #  - /github/workflow:/usr/local/site
-    #- uses: actions/checkout@v2
-      - name: debug
-        run: pwd && whoami
-      # working-directory: /
-    #- name: build
-    #  run: |
-    #    echo Gulping...
-    #    echo ./node_modules/gulp/bin/gulp.js build
-    #    echo Building the static site...
-    #    echo JEKYLL_ENV=opensource.microsoft.com bundle exec jekyll build
+      - name: runit
+        run: |
+          docker run -i -v ${PWD}:/usr/local/site docker.pkg.github.com/microsoft/opensource.microsoft.com/custom-jekyll-builder:latest sh << COMMANDS
+          cd /usr/local/site
+          echo Jekyll goods...
+          bundle install
+          bundle outdated
+          # echo JavaScript ecosystem...
+          # npm i
+          echo Gulp...
+          ./node_modules/gulp/bin/gulp.js build
+          echo Building static site...
+          JEKYLL_ENV=opensource.microsoft.com jekyll build
+          COMMANDS
