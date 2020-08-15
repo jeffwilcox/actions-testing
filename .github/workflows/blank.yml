@@ -12,5 +12,18 @@ jobs:
         id: my-script
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
-          result-encoding: string
-          script: return "I will be string (not JSON) encoded!"
+          script: |
+            const creator = context.payload.sender.login
+            try {
+              const collaboratorStatus = await github.repos.checkCollaborator({
+                owner: 'jeffwilcox',
+                repo: 'actions-testing',
+                username: creator,
+              }
+              console.log('cs:');
+              console.dir(collaboratorStatus);
+            } catch (error) {
+              console.log('error:');
+              console.dir(error);
+            }
+            
