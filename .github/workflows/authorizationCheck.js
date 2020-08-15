@@ -2,7 +2,6 @@ async function authorizationCheck({github, context}) {
   const { payload } = context;
   const { sender, action, pull_request, review, repository } = payload;
   const { login } = sender;
-  console.log(`sender: ${login}`);
 
   let authorizedWriter = false;
   let couldAction = false; // whether it would meet the need to take action given permission
@@ -30,8 +29,8 @@ async function authorizationCheck({github, context}) {
     //  couldAction = true;
     // }
   }
-
   if (pull_request) {
+    console.log('pull_request is present');
     const { mergeable } = pull_request;
     if (mergeable === true) {
       console.log('This pull request is mergeable.');
@@ -41,7 +40,6 @@ async function authorizationCheck({github, context}) {
       console.log('The state of the merge test is not yet known. Try again later. mergeable === null');
     }
   }
-  
   if (couldAction) {
     const response = await github.repos.getCollaboratorPermissionLevel({
       owner: repository.owner.login,
@@ -52,7 +50,6 @@ async function authorizationCheck({github, context}) {
     if (response && response.data && response.data.permission) {
       permission = response.data.permission;
     }
-    console.dir(response);
     if (permission) {
       switch (permission) {
         case 'admin':
@@ -70,5 +67,8 @@ async function authorizationCheck({github, context}) {
 
   return { collaborator: false, action: false, authorizedWriter: false };
 }
+
+console.log('debug:');
+console.dir(payload);
 
 module.exports = authorizationCheck;
