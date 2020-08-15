@@ -13,6 +13,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            console.dir(context.payload)
             const creator = context.payload.sender.login
             try {
               const collaboratorStatus = await github.repos.checkCollaborator({
