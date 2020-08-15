@@ -38,8 +38,6 @@ jobs:
                 return { collaborator: false, action: false };
             }
       - name: "Only do more if authorized"
-        if: steps.authorizeAction.outputs.action == true
-        run: "echo OK to do more"
+        run: "echo always"
       - name: "Only do more if authorized"
-        if: steps.authorizeAction.outputs.action != true
-        run: "echo nope no more"
+        run: "echo always"
