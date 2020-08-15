@@ -8,23 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v2
-        id: my-script
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            console.dir(context.payload)
-            const creator = context.payload.sender.login
-            try {
-              const collaboratorStatus = await github.repos.checkCollaborator({
-                owner: 'jeffwilcox',
-                repo: 'actions-testing',
-                username: creator,
-              });
-              console.log('cs:');
-              console.dir(collaboratorStatus);
-            } catch (error) {
-              console.log('error:');
-              console.dir(error);
-            }
-            
+      - name: xyz
+        env:
+          GHT: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          echo "Hello world and $GHT"
