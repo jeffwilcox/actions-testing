@@ -44,7 +44,7 @@ async function authorizationCheck({github, context}) {
   
   if (couldAction) {
     const response = await github.repos.getCollaboratorPermissionLevel({
-      owner: repository.owner.name,
+      owner: repository.owner.login,
       repo: repository.name,
       username: login,
     });
