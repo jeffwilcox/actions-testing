@@ -64,11 +64,14 @@ async function authorizationCheck({github, context}) {
       console.log('Permission level for the user could not be retrieved.');
     }
   }
+  
+  console.log('debug:');
+  console.dir(payload);
 
+  console.log('way more inc some secrets fyi:');
+  console.dir(context);
+  
   return { collaborator: false, action: false, authorizedWriter: false };
 }
-
-console.log('debug:');
-console.dir(payload);
 
 module.exports = authorizationCheck;
