@@ -5,6 +5,7 @@ async function authorizationCheck({github, context}) {
   console.log(`eventName=${eventName}, action=${action}, sender=${login}`);
   if (pull_request) {
     console.log(`pull_request: state=${pull_request.state}, draft=${pull_request.draft}, web=${pull_request.html_url}`);
+    console.dir(pull_request);
   }
   if (review) {
     console.log(`review: state=${review.state}`);
